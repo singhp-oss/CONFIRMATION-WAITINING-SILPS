@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pradeep Cargo — AWB Dashboard</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:#eef2f7; padding:24px; color:#333; }
+
+.header {
+    background:linear-gradient(135deg,#1a237e,#283593);
+    color:white; padding:24px 30px; border-radius:14px;
+    margin-bottom:20px; display:flex;
+    justify-content:space-between; align-items:center;
+    box-shadow:0 4px 15px rgba(26,35,126,0.3);
+}
+.header h1 { font-size:20px; letter-spacing:0.5px; }
+.header .sub { font-size:12px; opacity:0.75; margin-top:4px; }
+.header .meta { text-align:right; font-size:12px; opacity:0.8; }
+
+.alert { padding:16px 22px; border-radius:10px; margin-bottom:20px; font-weight:600; font-size:15px; }
+.alert-pending { background:#fff3f3; border-left:5px solid #e53935; color:#c62828; }
+.alert-ok { background:#f1fff4; border-left:5px solid #43a047; color:#2e7d32; }
+
+.cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:20px; }
+.card { background:white; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.07); border-top:4px solid transparent; }
+.card.c1 { border-color:#5c6bc0; }
+.card.c2 { border-color:#42a5f5; }
+.card.c3 { border-color:#66bb6a; }
+.card.c4 { border-color:#ef5350; }
+.card .num { font-size:38px; font-weight:700; margin-bottom:6px; }
+.card.c1 .num { color:#3949ab; }
+.card.c2 .num { color:#1e88e5; }
+.card.c3 .num { color:#43a047; }
+.card.c4 .num { color:#e53935; }
+.card .lbl { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:1.2px; }
+
+.tables { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+.box { background:white; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
+.box h2 { font-size:14px; font-weight:700; margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid #f0f0f0; }
+.box.pending h2 { color:#c62828; }
+.box.confirmed h2 { color:#2e7d32; }
+
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { background:#f8f9fa; padding:10px 12px; text-align:left; font-weight:600; color:#555; font-size:11px; text-transform:uppercase; }
+td { padding:9px 12px; border-bottom:1px solid #f5f5f5; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:#fafafa; }
+
+.badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600; }
+.badge-pending { background:#ffebee; color:#c62828; }
+.badge-confirmed { background:#e8f5e9; color:#2e7d32; }
+
+.track-btn {
+    display:inline-block; padding:4px 12px;
+    background:#1a237e; color:white; border-radius:20px;
+    font-size:11px; font-weight:600; text-decoration:none;
+    transition:all 0.2s;
+}
+.track-btn:hover { background:#283593; transform:translateY(-1px); }
+.track-btn-ok { background:#2e7d32; }
+.track-btn-ok:hover { background:#1b5e20; }
+
+.empty { text-align:center; padding:40px; color:#bbb; font-size:14px; }
+
+.reports-box { background:white; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(0,0,0,0.07); margin-bottom:20px; }
+.reports-box h2 { font-size:14px; font-weight:700; color:#1a237e; margin-bottom:10px; }
+.reports-box code { background:#f5f5f5; padding:8px 14px; border-radius:6px; display:inline-block; font-size:12px; color:#333; margin-top:6px; }
+
+.footer { text-align:center; color:#aaa; font-size:12px; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1>✈️ PRADEEP CARGO &amp; COURIER SERVICE</h1>
+        <div class="sub">AWB Confirmation Dashboard &nbsp;|&nbsp; Stop Date: 16 Jun 2026</div>
+    </div>
+    <div class="meta">Generated: 17 Jun 2026, 12:40 pm</div>
+</div>
+
+<div class="alert alert-pending">🔴 &nbsp;3 AWB IndiGo se confirm hona baaki — PDF ka wait karo</div>
+
+<div class="cards">
+    <div class="card c1"><div class="num">7949</div><div class="lbl">Excel AWB Total</div></div>
+    <div class="card c2"><div class="num">20</div><div class="lbl">Slips Scanned</div></div>
+    <div class="card c3"><div class="num">17</div><div class="lbl">✅ Confirmed</div></div>
+    <div class="card c4"><div class="num">3</div><div class="lbl">⏳ Pending</div></div>
+</div>
+
+<div class="tables">
+    <div class="box pending">
+        <h2>⏳ PENDING (3) — IndiGo se confirm hona baaki</h2>
+        
+        <table>
+            <thead><tr><th>AWB Number</th><th>Route</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>
+        <tr>
+            <td><span class="badge badge-pending">⏳</span> 29794590</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229794590" target="_blank" class="track-btn">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-pending">⏳</span> 29785350</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229785350" target="_blank" class="track-btn">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-pending">⏳</span> 29781194</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229781194" target="_blank" class="track-btn">🔍 Track</a></td>
+        </tr></tbody>
+        </table>
+    </div>
+    <div class="box confirmed">
+        <h2>✅ CONFIRMED (17)</h2>
+        
+        <table>
+            <thead><tr><th>AWB Number</th><th>Route</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29792814</td>
+            <td>CCU-MAA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229792814" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29790342</td>
+            <td>CCU-DEL</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229790342" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29788640</td>
+            <td>CCU-IXS</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229788640" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29788220</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229788220" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29787531</td>
+            <td>CCU-DIB</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229787531" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29787365</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229787365" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29785243</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229785243" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29784123</td>
+            <td>CCU-IMF</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229784123" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29783821</td>
+            <td>CCU-DEL</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229783821" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29781006</td>
+            <td>CCU-IXA</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229781006" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29572174</td>
+            <td>CCU-DEL</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229572174" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29771766</td>
+            <td>CCU-IXS</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229771766" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29763694</td>
+            <td>CCU-BOM</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229763694" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29762541</td>
+            <td>CCU-IXZ</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229762541" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29760894</td>
+            <td>CCU-GAU</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229760894" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29760651</td>
+            <td>CCU-?</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229760651" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr>
+        <tr>
+            <td><span class="badge badge-confirmed">✅</span> 29759940</td>
+            <td>CCU-?</td>
+            <td>17-Jun-2026</td>
+            <td><a href="https://6ecargo.goindigo.in/FrmAWBTracking.aspx?awbno=31229759940" target="_blank" class="track-btn track-btn-ok">🔍 Track</a></td>
+        </tr></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="reports-box">
+    <h2>📁 Purani Reports</h2>
+    <p style="font-size:13px;color:#666;">Pichli sabhi reports yahan saved hain:</p>
+    <code>D:\AWB_Automation\reports\</code>
+</div>
+
+<div class="footer">PCCS AWB Automation &nbsp;|&nbsp; Node.js + Tesseract OCR</div>
+
+</body>
+</html>
