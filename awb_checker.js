@@ -198,10 +198,11 @@ async function runWhatsApp(stopDate, excelAWBs) {
                     '--no-first-run',
                     '--disable-extensions'
                 ],
-                timeout: 90000
+                timeout: 180000  // FIX: 90s → 180s (3 minutes) - slow connection ke liye
             },
-            authTimeoutMs: 90000,
-            qrMaxRetries: 5
+            authTimeoutMs: 180000,  // FIX: 90s → 180s - WhatsApp connection timeout
+            qrMaxRetries: 5,
+            restartOnAuthFail: true // FIX: Added auto-restart on failure
         });
 
         // QR Code
