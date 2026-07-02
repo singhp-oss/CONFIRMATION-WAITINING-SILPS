@@ -163,7 +163,7 @@ ${pending.length > 0
 <div class="reports-box">
     <h2>📁 Purani Reports</h2>
     <p style="font-size:13px;color:#666;">Pichli sabhi reports yahan saved hain:</p>
-    <code>C:\AWB_TOOLS\WAITING-SLIPS_VERIFIER\\reports\\</code>
+    <code>${config.REPORTS_FOLDER}</code>
 </div>
 
 <div class="footer">PCCS AWB Automation &nbsp;|&nbsp; Node.js + Tesseract OCR</div>
@@ -171,20 +171,41 @@ ${pending.length > 0
 </body>
 </html>`;
 
-    if (!fs.existsSync(config.REPORTS_FOLDER)) {
-        fs.mkdirSync(config.REPORTS_FOLDER, { recursive: true });
+    try {
+        // FIX: Ensure reports folder exists
+        if (!fs.existsSync(config.REPORTS_FOLDER)) {
+            fs.mkdirSync(config.REPORTS_FOLDER, { recursive: true });
+        }
+
+        // Save timestamped report in reports folder
+        const reportFile = path.join(config.REPORTS_FOLDER, `report_${ts}.html`);
+        fs.writeFileSync(reportFile, html, 'utf8');
+        console.log(`\n✅ Report saved: ${reportFile}`);
+
+        // FIX: Save to config folder instead of hardcoded D:\\AWB_Automation
+        const dashFile = path.join(config.REPORTS_FOLDER, 'dashboard.html');
+        fs.writeFileSync(dashFile, html, 'utf8');
+        console.log(`✅ Dashboard updated: ${dashFile}`);
+
+        // Try to open in default browser
+        const command = process.platform === 'win32' 
+            ? `start "" "${dashFile}"`
+            : process.platform === 'darwin'
+            ? `open "${dashFile}"`
+            : `xdg-open "${dashFile}"`;
+        
+        exec(command, (err) => {
+            if (!err) {
+                console.log(`✅ Dashboard browser me khul gaya!`);
+            } else {
+                console.log(`⚠️  Dashboard file ready at: ${dashFile}`);
+                console.log(`   Manually kholo browser me`);
+            }
+        });
+
+    } catch (e) {
+        console.log(`❌ Dashboard error: ${e.message}`);
     }
-
-    const reportFile = path.join(config.REPORTS_FOLDER, `report_${ts}.html`);
-    fs.writeFileSync(reportFile, html, 'utf8');
-
-    const dashFile = path.join('D:\\AWB_Automation', 'dashboard.html');
-    fs.writeFileSync(dashFile, html, 'utf8');
-
-    exec(`start "" "${dashFile}"`);
-
-    console.log(`\n✅ Dashboard browser me khul gaya!`);
-    console.log(`📁 Report saved: reports\\report_${ts}.html`);
 }
 
 module.exports = { generateDashboard };
