@@ -3,6 +3,12 @@
 //   Sirf yahi file edit karo
 // ============================================================
 
+const path = require('path');
+
+// Base folder — yahi ek jagah change karo, baaki sab isi se banega.
+// IMPORTANT: Windows path me hamesha DOUBLE backslash (\\) likho.
+const BASE_FOLDER = 'C:\\AWB_TOOLS\\WAITING-SLIPS_VERIFIER';
+
 module.exports = {
     // WhatsApp Group ka exact naam
     WHATSAPP_GROUP_NAME: 'Pradeep Cargo Airport GRP',
@@ -16,21 +22,27 @@ module.exports = {
     // AWB column letter
     AWB_COLUMN: 'B',
 
-    // Chrome ka path
+    // Chrome ka path — agar yahan Chrome na mile to bundled Chromium use hoga
     CHROME_PATH: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
 
-    // Reports save folder
-    REPORTS_FOLDER: 'C:\AWB_TOOLS\WAITING-SLIPS_VERIFIER',
+    // Base folder
+    BASE_FOLDER,
 
-    // Temp folder
-    TEMP_FOLDER: 'C:\AWB_TOOLS\WAITING-SLIPS_VERIFIER',
+    // Reports save folder (HTML dashboards)
+    REPORTS_FOLDER: path.join(BASE_FOLDER, 'reports'),
 
-    // WhatsApp session folder
-    SESSION_FOLDER: 'C:\AWB_TOOLS\WAITING-SLIPS_VERIFIER',
+    // Temp folder (working files)
+    TEMP_FOLDER: path.join(BASE_FOLDER, 'temp'),
+
+    // WhatsApp session folder (auth data — ise alag rakhna zaroori hai)
+    SESSION_FOLDER: path.join(BASE_FOLDER, 'session'),
 
     // Airline name
     AIRLINE: 'IndiGo',
 
     // Fetch limit
-    MESSAGE_FETCH_LIMIT: 500
+    MESSAGE_FETCH_LIMIT: 500,
+
+    // WhatsApp ready hone ke liye max wait (ms). Slow connection ke liye 4 min.
+    WA_READY_TIMEOUT_MS: 240000
 };
